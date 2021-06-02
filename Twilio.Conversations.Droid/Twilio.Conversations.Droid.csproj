@@ -45,12 +45,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Additions\AsyncCallbackListener.cs" />
+    <Compile Include="Additions\AsyncStatusListener.cs" />
+    <Compile Include="Additions\CallbackListener.cs" />
     <Compile Include="Additions\Fixes\ICallbackListener.cs" />
     <Compile Include="Additions\Fixes\ICallbackListenerInvoker.cs" />
     <Compile Include="Additions\Fixes\IConversationsClient.cs" />
     <Compile Include="Additions\Fixes\IMessage.cs" />
     <Compile Include="Additions\Fixes\IStatusListener.cs" />
     <Compile Include="Additions\Fixes\IStatusListenerInvoker.cs" />
+    <Compile Include="Additions\IConversationsClientConversationBuilder.cs" />
+    <Compile Include="Additions\IConversationsClient.cs" />
+    <Compile Include="Additions\IConversation.cs" />
+    <Compile Include="Additions\IMessage.cs" />
+    <Compile Include="Additions\IUser.cs" />
+    <Compile Include="Additions\ProgressListener.cs" />
+    <Compile Include="Additions\TwilioException.cs" />
+    <Compile Include="Additions\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

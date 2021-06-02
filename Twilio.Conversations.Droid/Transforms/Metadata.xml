@@ -1,0 +1,11 @@
+﻿<metadata> 
+	<attr path="/api/package[@name='com.twilio.conversations']" name="managedName">Twilio.Conversations</attr>
+	<attr path="/api/package[@name='com.twilio.conversations']/class[@name='Attributes']" name="managedName">JsonAttributes</attr>
+	
+	<!--These methods throw a Java.Lang.NoSuchMethodException due to certain binding issues, so remove them and implement them manually. -->
+	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='setLogLevel']"/>
+	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='create']"/>
+	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient.Properties']/method[@name='newBuilder']"/>
+	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='Message']/method[@name='options']"/>
+ 
+</metadata>

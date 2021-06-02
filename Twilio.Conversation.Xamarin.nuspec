@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+	<metadata>
+		<id>Twilio.Conversations.Xamarin</id>
+		<version>1.0.0-alpha</version>
+		<authors>Twilio, Joseph Edusei</authors>
+		<owners>twilio, jedusei</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<license type="expression">MIT</license>
+		<projectUrl>https://github.com/jedusei/Twilio.Conversations.Xamarin</projectUrl>
+		<description>Xamarin.Android and Xamarin.iOS Bindings for the Twilio Conversation Android and iOS SDKs respectively.</description>
+		<releaseNotes>This release includes bindings for the Twilio Conversations Android SDK (1.4.1) and iOS SDK (1.3.1).</releaseNotes>
+		<tags>twilio conversations</tags>
+		<dependencies>
+			<group targetFramework="monoandroid">
+				<dependency id="Xamarin.ReLinker" version="1.4.3" />
+				<dependency id="Square.OkHttp3" version="3.13.0" />
+			</group>
+		</dependencies>
+		<files>
+			<!-- Android -->
+			<file src="./Twilio.Conversations.Droid/bin/Release/Twilio.Conversations.Droid.*" target="lib/MonoAndroid44" />
+			<!-- iOS -->
+			<file src="./Twilio.Conversations.iOS/bin/Release/Twilio.Conversations.iOS.*" target="lib/Xamarin.iOS" />
+		</files>
+	</metadata>
+</package>

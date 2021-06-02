@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31313.79
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Conversations.Droid", "Twilio.Conversations.Droid\Twilio.Conversations.Droid.csproj", "{ED7A4DDD-6EE7-4529-9DE2-AB9D9593DAB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Conversations.iOS", "Twilio.Conversations.iOS\Twilio.Conversations.iOS.csproj", "{C23D7586-CEB9-44EF-95F0-33C09A72C696}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED7A4DDD-6EE7-4529-9DE2-AB9D9593DAB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED7A4DDD-6EE7-4529-9DE2-AB9D9593DAB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED7A4DDD-6EE7-4529-9DE2-AB9D9593DAB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED7A4DDD-6EE7-4529-9DE2-AB9D9593DAB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C23D7586-CEB9-44EF-95F0-33C09A72C696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C23D7586-CEB9-44EF-95F0-33C09A72C696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C23D7586-CEB9-44EF-95F0-33C09A72C696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C23D7586-CEB9-44EF-95F0-33C09A72C696}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38D905C3-9AB9-44A6-B7C4-ADCB935CC4E7}
+	EndGlobalSection
+EndGlobal

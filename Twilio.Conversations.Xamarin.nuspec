@@ -14,7 +14,7 @@
 		<dependencies> 
 			<group targetFramework="MonoAndroid44">
 				<dependency id="Xamarin.ReLinker" version="1.4.3" />
-				<dependency id="Square.OkHttp3" version="3.13.0" />
+				<dependency id="Square.OkHttp3" version="4.9.1" />
 			</group>
 			<group targetFramework="Xamarin.iOS10"/>
 		</dependencies>

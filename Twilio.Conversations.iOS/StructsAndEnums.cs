@@ -3,6 +3,14 @@ using ObjCRuntime;
 namespace Twilio.Conversations
 {
 	[Native]
+	public enum TCHDeliveryAmount : ulong
+	{
+		None = 0,
+		Some,
+		All
+	}
+
+	[Native]
 	public enum TCHClientConnectionState : long
 	{
 		Unknown,
@@ -130,14 +138,6 @@ namespace Twilio.Conversations
 		Min = 10000,
 		Max = 2147483647,
 		Default = 90000
-	}
-
-	[Native]
-	public enum TCHDeliveryAmount : ulong
-	{
-		None = 0,
-		Some,
-		All
 	}
 
 	[Native]

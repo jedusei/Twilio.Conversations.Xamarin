@@ -5,6 +5,35 @@ using ObjCRuntime;
 
 namespace Twilio.Conversations
 {
+    // @interface TCHAggregatedDeliveryReceipt : NSObject
+    [BaseType(typeof(NSObject))]
+    interface TCHAggregatedDeliveryReceipt
+    {
+        // @property (readonly) NSInteger total;
+        [Export("total")]
+        nint Total { get; }
+
+        // @property (readonly) TCHDeliveryAmount sent;
+        [Export("sent")]
+        TCHDeliveryAmount Sent { get; }
+
+        // @property (readonly) TCHDeliveryAmount delivered;
+        [Export("delivered")]
+        TCHDeliveryAmount Delivered { get; }
+
+        // @property (readonly) TCHDeliveryAmount undelivered;
+        [Export("undelivered")]
+        TCHDeliveryAmount Undelivered { get; }
+
+        // @property (readonly) TCHDeliveryAmount read;
+        [Export("read")]
+        TCHDeliveryAmount Read { get; }
+
+        // @property (readonly) TCHDeliveryAmount failed;
+        [Export("failed")]
+        TCHDeliveryAmount Failed { get; }
+    }
+
     // @interface TCHError : NSError
     [BaseType(typeof(NSError))]
     interface TCHError
@@ -72,7 +101,6 @@ namespace Twilio.Conversations
     delegate void TCHMediaOnCompleted(string arg0);
 
     [Static]
-    //[Verify (ConstantsInterfaceAssociation)]
     partial interface Constants
     {
         // extern NSString *const _Nonnull TCHConversationOptionFriendlyName;
@@ -111,7 +139,6 @@ namespace Twilio.Conversations
 
         // -(instancetype _Null_unspecified)initWithArray:(NSArray * _Nonnull)array;
         [Export("initWithArray:")]
-        //[Verify (StronglyTypedNSArray)]
         IntPtr Constructor(NSObject[] array);
 
         // -(instancetype _Null_unspecified)initWithString:(NSString * _Nonnull)string;
@@ -148,7 +175,6 @@ namespace Twilio.Conversations
 
         // @property (readonly) NSArray * _Nullable array;
         [NullAllowed, Export("array")]
-        //[Verify (StronglyTypedNSArray)]
         NSObject[] Array { get; }
 
         // @property (readonly) NSString * _Nullable string;
@@ -174,7 +200,6 @@ namespace Twilio.Conversations
 
         // -(TCHJsonAttributes * _Nullable)attributes;
         [NullAllowed, Export("attributes")]
-        //[Verify (MethodToProperty)]
         TCHJsonAttributes Attributes { get; }
 
         // -(void)setAttributes:(TCHJsonAttributes * _Nullable)attributes completion:(TCHCompletion _Nullable)completion;
@@ -187,51 +212,19 @@ namespace Twilio.Conversations
 
         // -(BOOL)isOnline;
         [Export("isOnline")]
-        //[Verify (MethodToProperty)]
         bool IsOnline { get; }
 
         // -(BOOL)isNotifiable;
         [Export("isNotifiable")]
-        //[Verify (MethodToProperty)]
         bool IsNotifiable { get; }
 
         // -(BOOL)isSubscribed;
         [Export("isSubscribed")]
-        //[Verify (MethodToProperty)]
         bool IsSubscribed { get; }
 
         // -(void)unsubscribe;
         [Export("unsubscribe")]
         void Unsubscribe();
-    }
-
-    // @interface TCHAggregatedDeliveryReceipt : NSObject
-    [BaseType(typeof(NSObject))]
-    interface TCHAggregatedDeliveryReceipt
-    {
-        // @property (readonly) NSInteger total;
-        [Export("total")]
-        nint Total { get; }
-
-        // @property (readonly) TCHDeliveryAmount sent;
-        [Export("sent")]
-        TCHDeliveryAmount Sent { get; }
-
-        // @property (readonly) TCHDeliveryAmount delivered;
-        [Export("delivered")]
-        TCHDeliveryAmount Delivered { get; }
-
-        // @property (readonly) TCHDeliveryAmount undelivered;
-        [Export("undelivered")]
-        TCHDeliveryAmount Undelivered { get; }
-
-        // @property (readonly) TCHDeliveryAmount read;
-        [Export("read")]
-        TCHDeliveryAmount Read { get; }
-
-        // @property (readonly) TCHDeliveryAmount failed;
-        [Export("failed")]
-        TCHDeliveryAmount Failed { get; }
     }
 
     // @interface TCHDetailedDeliveryReceipt : NSObject
@@ -362,7 +355,6 @@ namespace Twilio.Conversations
 
         // -(TCHJsonAttributes * _Nullable)attributes;
         [NullAllowed, Export("attributes")]
-        //[Verify (MethodToProperty)]
         TCHJsonAttributes Attributes { get; }
 
         // -(void)setAttributes:(TCHJsonAttributes * _Nullable)attributes completion:(TCHCompletion _Nullable)completion;
@@ -371,7 +363,6 @@ namespace Twilio.Conversations
 
         // -(BOOL)hasMedia;
         [Export("hasMedia")]
-        //[Verify (MethodToProperty)]
         bool HasMedia { get; }
 
         // -(void)getMediaContentTemporaryUrlWithCompletion:(TCHStringCompletion _Nonnull)completion;
@@ -475,7 +466,6 @@ namespace Twilio.Conversations
 
         // -(TCHJsonAttributes * _Nullable)attributes;
         [NullAllowed, Export("attributes")]
-        //[Verify (MethodToProperty)]
         TCHJsonAttributes Attributes { get; }
 
         // -(void)setAttributes:(TCHJsonAttributes * _Nullable)attributes completion:(TCHCompletion _Nullable)completion;
@@ -568,7 +558,6 @@ namespace Twilio.Conversations
 
         // -(NSArray<TCHParticipant *> * _Nonnull)participants;
         [Export("participants")]
-        //[Verify (MethodToProperty)]
         TCHParticipant[] Participants { get; }
 
         // -(void)addParticipantByIdentity:(NSString * _Nonnull)identity attributes:(TCHJsonAttributes * _Nullable)attributes completion:(TCHCompletion _Nullable)completion;
@@ -605,7 +594,7 @@ namespace Twilio.Conversations
     {
         // @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)client conversation:(TCHConversation * _Nonnull)conversation updated:(TCHConversationUpdate)updated;
         [Export("conversationsClient:conversation:updated:")]
-        void Conversation(TwilioConversationsClient client, TCHConversation conversation, TCHConversationUpdate updated);
+        void ConversationUpdated(TwilioConversationsClient client, TCHConversation conversation, TCHConversationUpdate updated);
 
         // @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)client conversationDeleted:(TCHConversation * _Nonnull)conversation;
         [Export("conversationsClient:conversationDeleted:")]
@@ -710,7 +699,6 @@ namespace Twilio.Conversations
 
         // -(TCHJsonAttributes * _Nullable)attributes;
         [NullAllowed, Export("attributes")]
-        //[Verify (MethodToProperty)]
         TCHJsonAttributes Attributes { get; }
 
         // -(void)setAttributes:(TCHJsonAttributes * _Nullable)attributes completion:(TCHCompletion _Nullable)completion;
@@ -758,7 +746,6 @@ namespace Twilio.Conversations
         // +(void)setLogLevel:(TCHLogLevel)logLevel;
         [Static]
         [Export("logLevel")]
-        //[Verify (MethodToProperty)]
         TCHLogLevel LogLevel { get; set; }
 
         // +(void)conversationsClientWithToken:(NSString * _Nonnull)token properties:(TwilioConversationsClientProperties * _Nullable)properties delegate:(id<TwilioConversationsClientDelegate> _Nullable)delegate completion:(TCHTwilioClientCompletion _Nonnull)completion;
@@ -769,13 +756,11 @@ namespace Twilio.Conversations
         // +(NSString * _Nonnull)sdkName;
         [Static]
         [Export("sdkName")]
-        //[Verify (MethodToProperty)]
         string SdkName { get; }
 
         // +(NSString * _Nonnull)sdkVersion;
         [Static]
         [Export("sdkVersion")]
-        //[Verify (MethodToProperty)]
         string SdkVersion { get; }
 
         // -(void)updateToken:(NSString * _Nonnull)token completion:(TCHCompletion _Nullable)completion;
@@ -784,7 +769,6 @@ namespace Twilio.Conversations
 
         // -(NSArray<TCHConversation *> * _Nullable)myConversations;
         [NullAllowed, Export("myConversations")]
-        //[Verify (MethodToProperty)]
         TCHConversation[] MyConversations { get; }
 
         // -(void)createConversationWithOptions:(NSDictionary<NSString *,id> * _Nullable)options completion:(TCHConversationCompletion _Nullable)completion;
@@ -801,7 +785,6 @@ namespace Twilio.Conversations
 
         // -(NSArray<TCHUser *> * _Nullable)users;
         [NullAllowed, Export("users")]
-        //[Verify (MethodToProperty)]
         TCHUser[] Users { get; }
 
         // -(void)subscribedUserWithIdentity:(NSString * _Nonnull)identity completion:(TCHUserCompletion _Nonnull)completion;
@@ -822,7 +805,6 @@ namespace Twilio.Conversations
 
         // -(BOOL)isReachabilityEnabled;
         [Export("isReachabilityEnabled")]
-        //[Verify (MethodToProperty)]
         bool IsReachabilityEnabled { get; }
 
         // -(void)shutdown;
@@ -860,7 +842,6 @@ namespace Twilio.Conversations
     [BaseType(typeof(NSObject))]
     interface TwilioConversationsClientDelegate
     {
-        // @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)client connectionStateUpdated:(TCHClientConnectionState)state;
         [Export("conversationsClient:connectionStateUpdated:")]
         void ConversationsClientConnectionStateUpdated(TwilioConversationsClient client, TCHClientConnectionState state);
 
@@ -898,19 +879,19 @@ namespace Twilio.Conversations
 
         // @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)client conversation:(TCHConversation * _Nonnull)conversation participant:(TCHParticipant * _Nonnull)participant updated:(TCHParticipantUpdate)updated;
         [Export("conversationsClient:conversation:participant:updated:")]
-        void ConversationsClient(TwilioConversationsClient client, TCHConversation conversation, TCHParticipant participant, TCHParticipantUpdate updated);
+        void ConversationsClientParticipantUpdated(TwilioConversationsClient client, TCHConversation conversation, TCHParticipant participant, TCHParticipantUpdate updated);
 
         // @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)client conversation:(TCHConversation * _Nonnull)conversation participantLeft:(TCHParticipant * _Nonnull)participant;
         [Export("conversationsClient:conversation:participantLeft:")]
-        void ConversationsClient(TwilioConversationsClient client, TCHConversation conversation, TCHParticipant participant);
+        void ConversationsClientParticipantLeft(TwilioConversationsClient client, TCHConversation conversation, TCHParticipant participant);
 
         // @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)client conversation:(TCHConversation * _Nonnull)conversation messageAdded:(TCHMessage * _Nonnull)message;
         [Export("conversationsClient:conversation:messageAdded:")]
-        void ConversationsClient(TwilioConversationsClient client, TCHConversation conversation, TCHMessage message);
+        void ConversationsClientMessageAdded(TwilioConversationsClient client, TCHConversation conversation, TCHMessage message);
 
         // @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)client conversation:(TCHConversation * _Nonnull)conversation message:(TCHMessage * _Nonnull)message updated:(TCHMessageUpdate)updated;
         [Export("conversationsClient:conversation:message:updated:")]
-        void ConversationsClient(TwilioConversationsClient client, TCHConversation conversation, TCHMessage message, TCHMessageUpdate updated);
+        void ConversationsClientMessageUpdated(TwilioConversationsClient client, TCHConversation conversation, TCHMessage message, TCHMessageUpdate updated);
 
         // @optional -(void)conversationsClient:(TwilioConversationsClient * _Nonnull)client conversation:(TCHConversation * _Nonnull)conversation messageDeleted:(TCHMessage * _Nonnull)message;
         [Export("conversationsClient:conversation:messageDeleted:")]

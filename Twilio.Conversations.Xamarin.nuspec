@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Twilio.Conversations.Xamarin</id>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 		<authors>Twilio, Joseph Edusei</authors>
 		<owners>jedusei</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>

@@ -34,6 +34,16 @@ namespace Twilio.Conversations
         TCHDeliveryAmount Failed { get; }
     }
 
+    // @interface TCHCancellationToken : NSObject
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface TCHCancellationToken
+    {
+        // -(void)cancel;
+        [Export("cancel")]
+        void Cancel();
+    }
+
     // @interface TCHError : NSError
     [BaseType(typeof(NSError))]
     interface TCHError
@@ -88,6 +98,12 @@ namespace Twilio.Conversations
     // typedef void (^TCHStringCompletion)(TCHResult * _Nonnull, NSString * _Nullable);
     delegate void TCHStringCompletion(TCHResult arg0, [NullAllowed] string arg1);
 
+    // typedef void (^TCHURLCompletion)(TCHResult * _Nonnull, NSUrl * _Nullable);
+    delegate void TCHURLCompletion(TCHResult arg0, [NullAllowed] NSUrl arg1);
+
+    // typedef void (^TCHMediaSidsCompletion)(TCHResult * _Nonnull, NSDictionary<NSString *,NSUrl *> * _Nullable);
+    delegate void TCHMediaSidsCompletion(TCHResult arg0, [NullAllowed] NSDictionary<NSString, NSUrl> arg1);
+
     // typedef void (^TCHDetailedDeliveryReceiptsCompletion)(TCHResult * _Nonnull, NSArray<TCHDetailedDeliveryReceipt *> * _Nullable);
     delegate void TCHDetailedDeliveryReceiptsCompletion(TCHResult arg0, [NullAllowed] TCHDetailedDeliveryReceipt[] arg1);
 
@@ -99,6 +115,9 @@ namespace Twilio.Conversations
 
     // typedef void (^TCHMediaOnCompleted)(NSString * _Nonnull);
     delegate void TCHMediaOnCompleted(string arg0);
+
+    // typedef void (^TCHMediaOnFailed)(TCHError * _Nonnull);
+    delegate void TCHMediaOnFailed(TCHError arg0);
 
     [Static]
     partial interface Constants
@@ -227,131 +246,160 @@ namespace Twilio.Conversations
         void Unsubscribe();
     }
 
-    // @interface TCHDetailedDeliveryReceipt : NSObject
+    // @interface TCHMediaMessageListener : NSObject
     [BaseType(typeof(NSObject))]
-    [DisableDefaultCtor]
-    interface TCHDetailedDeliveryReceipt
+    interface TCHMediaMessageListener
     {
-        // @property (readonly) TCHDeliveryStatus status;
-        [Export("status")]
-        TCHDeliveryStatus Status { get; }
+        // @property (nonatomic) TCHMediaOnStarted _Nullable onStarted;
+        [NullAllowed, Export("onStarted", ArgumentSemantic.Assign)]
+        TCHMediaOnStarted OnStarted { get; set; }
 
-        // @property (readonly) NSString * sid;
-        [Export("sid")]
-        string Sid { get; }
+        // @property (nonatomic) TCHMediaOnProgress _Nullable onProgress;
+        [NullAllowed, Export("onProgress", ArgumentSemantic.Assign)]
+        TCHMediaOnProgress OnProgress { get; set; }
 
-        // @property (readonly) NSString * messageSid;
-        [Export("messageSid")]
-        string MessageSid { get; }
+        // @property (nonatomic) TCHMediaOnCompleted _Nullable onCompleted;
+        [NullAllowed, Export("onCompleted", ArgumentSemantic.Assign)]
+        TCHMediaOnCompleted OnCompleted { get; set; }
 
-        // @property (readonly) NSString * conversationSid;
-        [Export("conversationSid")]
-        string ConversationSid { get; }
+        // @property (nonatomic) TCHMediaOnFailed _Nullable onFailed;
+        [NullAllowed, Export("onFailed", ArgumentSemantic.Assign)]
+        TCHMediaOnFailed OnFailed { get; set; }
 
-        // @property (readonly) NSString * channelMessageSid;
-        [Export("channelMessageSid")]
-        string ChannelMessageSid { get; }
-
-        // @property (readonly) NSString * participantSid;
-        [Export("participantSid")]
-        string ParticipantSid { get; }
-
-        // @property (readonly) NSInteger errorCode;
-        [Export("errorCode")]
-        nint ErrorCode { get; }
-
-        // @property (readonly) NSDate * dateCreatedAsDate;
-        [Export("dateCreatedAsDate")]
-        NSDate DateCreatedAsDate { get; }
-
-        // @property (readonly) NSDate * dateUpdatedAsDate;
-        [Export("dateUpdatedAsDate")]
-        NSDate DateUpdatedAsDate { get; }
+        // -(instancetype _Nonnull)initWithOnStarted:(TCHMediaOnStarted _Nullable)onStarted onProgress:(TCHMediaOnProgress _Nullable)onProgress onCompleted:(TCHMediaOnCompleted _Nullable)onCompleted onFailed:(TCHMediaOnFailed _Nullable)onFailed __attribute__((swift_name("init(onStarted:onProgress:onCompleted:onFailed:)")));
+        [Export("initWithOnStarted:onProgress:onCompleted:onFailed:")]
+        IntPtr Constructor([NullAllowed] TCHMediaOnStarted onStarted, [NullAllowed] TCHMediaOnProgress onProgress, [NullAllowed] TCHMediaOnCompleted onCompleted, [NullAllowed] TCHMediaOnFailed onFailed);
     }
 
-    // @interface TCHMessage : NSObject
+    // @interface TCHMessageBuilder : NSObject
     [BaseType(typeof(NSObject))]
-    interface TCHMessage
+    [DisableDefaultCtor]
+    interface TCHMessageBuilder
     {
+        // -(instancetype _Nonnull)setBody:(NSString * _Nullable)body __attribute__((swift_name("setBody(_:)")));
+        [Export("setBody:")]
+        TCHMessageBuilder SetBody([NullAllowed] string body);
+
+        // -(instancetype _Nonnull)setSubject:(NSString * _Nullable)subject __attribute__((swift_name("setSubject(_:)")));
+        [Export("setSubject:")]
+        TCHMessageBuilder SetSubject([NullAllowed] string subject);
+
+        // -(instancetype _Nonnull)setAttributes:(TCHJsonAttributes * _Nullable)attributes error:(TCHError * _Nullable * _Nullable)error __attribute__((swift_name("setAttributes(_:error:)")));
+        [Export("setAttributes:error:")]
+        TCHMessageBuilder SetAttributes([NullAllowed] TCHJsonAttributes attributes, [NullAllowed] out TCHError error);
+
+        // -(instancetype _Nonnull)addMediaWithInputStream:(NSInputStream * _Nonnull)inputStream contentType:(NSString * _Nonnull)contentType __attribute__((swift_name("addMedia(inputStream:contentType:)")));
+        [Export("addMediaWithInputStream:contentType:")]
+        TCHMessageBuilder AddMediaWithInputStream(NSInputStream inputStream, string contentType);
+
+        // -(instancetype _Nonnull)addMediaWithInputStream:(NSInputStream * _Nonnull)inputStream contentType:(NSString * _Nonnull)contentType filename:(NSString * _Nullable)filename __attribute__((swift_name("addMedia(inputStream:contentType:filename:)")));
+        [Export("addMediaWithInputStream:contentType:filename:")]
+        TCHMessageBuilder AddMediaWithInputStream(NSInputStream inputStream, string contentType, [NullAllowed] string filename);
+
+        // -(instancetype _Nonnull)addMediaWithInputStream:(NSInputStream * _Nonnull)inputStream contentType:(NSString * _Nonnull)contentType filename:(NSString * _Nullable)filename listener:(TCHMediaMessageListener * _Nullable)listener __attribute__((swift_name("addMedia(inputStream:contentType:filename:listener:)")));
+        [Export("addMediaWithInputStream:contentType:filename:listener:")]
+        TCHMessageBuilder AddMediaWithInputStream(NSInputStream inputStream, string contentType, [NullAllowed] string filename, [NullAllowed] TCHMediaMessageListener listener);
+
+        // -(instancetype _Nonnull)addMediaWithData:(NSData * _Nonnull)mediaData contentType:(NSString * _Nonnull)contentType __attribute__((swift_name("addMedia(data:contentType:)")));
+        [Export("addMediaWithData:contentType:")]
+        TCHMessageBuilder AddMediaWithData(NSData mediaData, string contentType);
+
+        // -(instancetype _Nonnull)addMediaWithData:(NSData * _Nonnull)mediaData contentType:(NSString * _Nonnull)contentType filename:(NSString * _Nullable)filename __attribute__((swift_name("addMedia(data:contentType:filename:)")));
+        [Export("addMediaWithData:contentType:filename:")]
+        TCHMessageBuilder AddMediaWithData(NSData mediaData, string contentType, [NullAllowed] string filename);
+
+        // -(instancetype _Nonnull)addMediaWithData:(NSData * _Nonnull)mediaData contentType:(NSString * _Nonnull)contentType filename:(NSString * _Nullable)filename listener:(TCHMediaMessageListener * _Nullable)listener __attribute__((swift_name("addMedia(data:contentType:filename:listener:)")));
+        [Export("addMediaWithData:contentType:filename:listener:")]
+        TCHMessageBuilder AddMediaWithData(NSData mediaData, string contentType, [NullAllowed] string filename, [NullAllowed] TCHMediaMessageListener listener);
+
+        // -(instancetype _Nonnull)setEmailBody:(NSString * _Nullable)emailBody contentType:(NSString * _Nonnull)contentType __attribute__((swift_name("setEmailBody(_:contentType:)")));
+        [Export("setEmailBody:contentType:")]
+        TCHMessageBuilder SetEmailBody([NullAllowed] string emailBody, string contentType);
+
+        // -(instancetype _Nonnull)setEmailBody:(NSString * _Nullable)emailBody contentType:(NSString * _Nonnull)contentType listener:(TCHMediaMessageListener * _Nullable)listener __attribute__((swift_name("setEmailBody(_:contentType:listener:)")));
+        [Export("setEmailBody:contentType:listener:")]
+        TCHMessageBuilder SetEmailBody([NullAllowed] string emailBody, string contentType, [NullAllowed] TCHMediaMessageListener listener);
+
+        // -(instancetype _Nonnull)setEmailBodyWithInputStream:(NSInputStream * _Nullable)inputStream contentType:(NSString * _Nonnull)contentType __attribute__((swift_name("setEmailBody(inputStream:contentType:)")));
+        [Export("setEmailBodyWithInputStream:contentType:")]
+        TCHMessageBuilder SetEmailBodyWithInputStream([NullAllowed] NSInputStream inputStream, string contentType);
+
+        // -(instancetype _Nonnull)setEmailBodyWithInputStream:(NSInputStream * _Nullable)inputStream contentType:(NSString * _Nonnull)contentType listener:(TCHMediaMessageListener * _Nullable)listener __attribute__((swift_name("setEmailBody(inputStream:contentType:listener:)")));
+        [Export("setEmailBodyWithInputStream:contentType:listener:")]
+        TCHMessageBuilder SetEmailBodyWithInputStream([NullAllowed] NSInputStream inputStream, string contentType, [NullAllowed] TCHMediaMessageListener listener);
+
+        // -(instancetype _Nonnull)setEmailHistory:(NSString * _Nullable)emailHistory contentType:(NSString * _Nonnull)contentType __attribute__((swift_name("setEmailHistory(_:contentType:)")));
+        [Export("setEmailHistory:contentType:")]
+        TCHMessageBuilder SetEmailHistory([NullAllowed] string emailHistory, string contentType);
+
+        // -(instancetype _Nonnull)setEmailHistory:(NSString * _Nullable)emailHistory contentType:(NSString * _Nonnull)contentType listener:(TCHMediaMessageListener * _Nullable)listener __attribute__((swift_name("setEmailHistory(_:contentType:listener:)")));
+        [Export("setEmailHistory:contentType:listener:")]
+        TCHMessageBuilder SetEmailHistory([NullAllowed] string emailHistory, string contentType, [NullAllowed] TCHMediaMessageListener listener);
+
+        // -(instancetype _Nonnull)setEmailHistoryWithInputStream:(NSInputStream * _Nullable)inputStream contentType:(NSString * _Nonnull)contentType __attribute__((swift_name("setEmailHistory(inputStream:contentType:)")));
+        [Export("setEmailHistoryWithInputStream:contentType:")]
+        TCHMessageBuilder SetEmailHistoryWithInputStream([NullAllowed] NSInputStream inputStream, string contentType);
+
+        // -(instancetype _Nonnull)setEmailHistoryWithInputStream:(NSInputStream * _Nullable)inputStream contentType:(NSString * _Nonnull)contentType listener:(TCHMediaMessageListener * _Nullable)listener __attribute__((swift_name("setEmailHistory(inputStream:contentType:listener:)")));
+        [Export("setEmailHistoryWithInputStream:contentType:listener:")]
+        TCHMessageBuilder SetEmailHistoryWithInputStream([NullAllowed] NSInputStream inputStream, string contentType, [NullAllowed] TCHMediaMessageListener listener);
+
+        // -(TCHUnsentMessage * _Nonnull)build;
+        [Export("build")]
+        TCHUnsentMessage Build();
+
+        // -(TCHCancellationToken * _Nonnull)buildAndSendWithCompletion:(TCHMessageCompletion _Nullable)completion __attribute__((swift_name("buildAndSend(completion:)")));
+        [Export("buildAndSendWithCompletion:")]
+        TCHCancellationToken BuildAndSendWithCompletion([NullAllowed] TCHMessageCompletion completion);
+    }
+
+    // @interface TCHParticipant : NSObject
+    [BaseType(typeof(NSObject))]
+    interface TCHParticipant
+    {
+        // @property (readonly, nonatomic, weak) TCHConversation * _Nullable conversation;
+        [NullAllowed, Export("conversation", ArgumentSemantic.Weak)]
+        TCHConversation Conversation { get; }
+
         // @property (readonly, copy, nonatomic) NSString * _Nullable sid;
         [NullAllowed, Export("sid")]
         string Sid { get; }
 
-        // @property (readonly, copy, nonatomic) NSNumber * _Nullable index;
-        [NullAllowed, Export("index", ArgumentSemantic.Copy)]
-        NSNumber Index { get; }
+        // @property (readonly, nonatomic, strong) NSString * _Nullable identity;
+        [NullAllowed, Export("identity", ArgumentSemantic.Strong)]
+        string Identity { get; }
 
-        // @property (readonly, copy, nonatomic) NSString * _Nullable author;
-        [NullAllowed, Export("author")]
-        string Author { get; }
+        // @property (readonly, nonatomic) TCHParticipantType type;
+        [Export("type")]
+        TCHParticipantType Type { get; }
 
-        // @property (readonly, copy, nonatomic) NSString * _Nullable subject;
-        [NullAllowed, Export("subject")]
-        string Subject { get; }
+        // @property (readonly, copy, nonatomic) NSNumber * _Nullable lastReadMessageIndex;
+        [NullAllowed, Export("lastReadMessageIndex", ArgumentSemantic.Copy)]
+        NSNumber LastReadMessageIndex { get; }
 
-        // @property (readonly, copy, nonatomic) NSString * _Nullable body;
-        [NullAllowed, Export("body")]
-        string Body { get; }
+        // @property (readonly, copy, nonatomic) NSString * _Nullable lastReadTimestamp;
+        [NullAllowed, Export("lastReadTimestamp")]
+        string LastReadTimestamp { get; }
 
-        // @property (readonly, assign, nonatomic) TCHMessageType messageType;
-        [Export("messageType", ArgumentSemantic.Assign)]
-        TCHMessageType MessageType { get; }
-
-        // @property (readonly, copy, nonatomic) NSString * _Nullable mediaSid;
-        [NullAllowed, Export("mediaSid")]
-        string MediaSid { get; }
-
-        // @property (readonly, assign, nonatomic) NSUInteger mediaSize;
-        [Export("mediaSize")]
-        nuint MediaSize { get; }
-
-        // @property (readonly, copy, nonatomic) NSString * _Nullable mediaType;
-        [NullAllowed, Export("mediaType")]
-        string MediaType { get; }
-
-        // @property (readonly, copy, nonatomic) NSString * _Nullable mediaFilename;
-        [NullAllowed, Export("mediaFilename")]
-        string MediaFilename { get; }
-
-        // @property (readonly, copy, nonatomic) NSString * _Nullable participantSid;
-        [NullAllowed, Export("participantSid")]
-        string ParticipantSid { get; }
-
-        // @property (readonly, copy, nonatomic) TCHParticipant * _Nullable participant;
-        [NullAllowed, Export("participant", ArgumentSemantic.Copy)]
-        TCHParticipant Participant { get; }
+        // @property (readonly, nonatomic, strong) NSDate * _Nullable lastReadTimestampAsDate;
+        [NullAllowed, Export("lastReadTimestampAsDate", ArgumentSemantic.Strong)]
+        NSDate LastReadTimestampAsDate { get; }
 
         // @property (readonly, copy, nonatomic) NSString * _Nullable dateCreated;
         [NullAllowed, Export("dateCreated")]
         string DateCreated { get; }
 
-        // @property (readonly, nonatomic, strong) NSDate * _Nullable dateCreatedAsDate;
-        [NullAllowed, Export("dateCreatedAsDate", ArgumentSemantic.Strong)]
+        // @property (readonly, copy, nonatomic) NSDate * _Nullable dateCreatedAsDate;
+        [NullAllowed, Export("dateCreatedAsDate", ArgumentSemantic.Copy)]
         NSDate DateCreatedAsDate { get; }
 
         // @property (readonly, copy, nonatomic) NSString * _Nullable dateUpdated;
         [NullAllowed, Export("dateUpdated")]
         string DateUpdated { get; }
 
-        // @property (readonly, nonatomic, strong) NSDate * _Nullable dateUpdatedAsDate;
-        [NullAllowed, Export("dateUpdatedAsDate", ArgumentSemantic.Strong)]
+        // @property (readonly, copy, nonatomic) NSDate * _Nullable dateUpdatedAsDate;
+        [NullAllowed, Export("dateUpdatedAsDate", ArgumentSemantic.Copy)]
         NSDate DateUpdatedAsDate { get; }
-
-        // @property (readonly, copy, nonatomic) NSString * _Nullable lastUpdatedBy;
-        [NullAllowed, Export("lastUpdatedBy")]
-        string LastUpdatedBy { get; }
-
-        // @property (readonly) TCHAggregatedDeliveryReceipt * _Nullable aggregatedDeliveryReceipt;
-        [NullAllowed, Export("aggregatedDeliveryReceipt")]
-        TCHAggregatedDeliveryReceipt AggregatedDeliveryReceipt { get; }
-
-        // -(void)getDetailedDeliveryReceiptsWithCompletion:(TCHDetailedDeliveryReceiptsCompletion _Nonnull)completion;
-        [Export("getDetailedDeliveryReceiptsWithCompletion:")]
-        void GetDetailedDeliveryReceiptsWithCompletion(TCHDetailedDeliveryReceiptsCompletion completion);
-
-        // -(void)updateBody:(NSString * _Nonnull)body completion:(TCHCompletion _Nullable)completion;
-        [Export("updateBody:completion:")]
-        void UpdateBody(string body, [NullAllowed] TCHCompletion completion);
 
         // -(TCHJsonAttributes * _Nullable)attributes;
         [NullAllowed, Export("attributes")]
@@ -361,31 +409,39 @@ namespace Twilio.Conversations
         [Export("setAttributes:completion:")]
         void SetAttributes([NullAllowed] TCHJsonAttributes attributes, [NullAllowed] TCHCompletion completion);
 
-        // -(BOOL)hasMedia;
-        [Export("hasMedia")]
-        bool HasMedia { get; }
+        // -(void)subscribedUserWithCompletion:(TCHUserCompletion _Nonnull)completion;
+        [Export("subscribedUserWithCompletion:")]
+        void SubscribedUserWithCompletion(TCHUserCompletion completion);
 
-        // -(void)getMediaContentTemporaryUrlWithCompletion:(TCHStringCompletion _Nonnull)completion;
-        [Export("getMediaContentTemporaryUrlWithCompletion:")]
-        void GetMediaContentTemporaryUrlWithCompletion(TCHStringCompletion completion);
+        // -(void)removeWithCompletion:(TCHCompletion _Nullable)completion;
+        [Export("removeWithCompletion:")]
+        void RemoveWithCompletion([NullAllowed] TCHCompletion completion);
     }
 
-    // @interface TCHMessageOptions : NSObject
+    // @interface TCHConversationLimits : NSObject
     [BaseType(typeof(NSObject))]
-    interface TCHMessageOptions
+    [DisableDefaultCtor]
+    interface TCHConversationLimits
     {
-        // -(instancetype _Nonnull)withBody:(NSString * _Nonnull)body;
-        [Export("withBody:")]
-        TCHMessageOptions WithBody(string body);
+        // @property (readonly, nonatomic) NSInteger mediaAttachmentsCountLimit;
+        [Export("mediaAttachmentsCountLimit")]
+        nint MediaAttachmentsCountLimit { get; }
 
-        // -(instancetype _Nonnull)withMediaStream:(NSInputStream * _Nonnull)mediaStream contentType:(NSString * _Nonnull)contentType defaultFilename:(NSString * _Nullable)defaultFilename onStarted:(TCHMediaOnStarted _Nullable)onStarted onProgress:(TCHMediaOnProgress _Nullable)onProgress onCompleted:(TCHMediaOnCompleted _Nullable)onCompleted;
-        [Export("withMediaStream:contentType:defaultFilename:onStarted:onProgress:onCompleted:")]
-        TCHMessageOptions WithMediaStream(NSInputStream mediaStream, string contentType, [NullAllowed] string defaultFilename, [NullAllowed] TCHMediaOnStarted onStarted, [NullAllowed] TCHMediaOnProgress onProgress, [NullAllowed] TCHMediaOnCompleted onCompleted);
+        // @property (readonly, nonatomic) NSInteger mediaAttachmentSizeLimitInMb;
+        [Export("mediaAttachmentSizeLimitInMb")]
+        nint MediaAttachmentSizeLimitInMb { get; }
 
-        // -(instancetype _Nullable)withAttributes:(TCHJsonAttributes * _Nonnull)attributes completion:(TCHCompletion _Nullable)completion;
-        [Export("withAttributes:completion:")]
-        [return: NullAllowed]
-        TCHMessageOptions WithAttributes(TCHJsonAttributes attributes, [NullAllowed] TCHCompletion completion);
+        // @property (readonly, nonatomic) NSInteger mediaAttachmentsTotalSizeLimitInMb;
+        [Export("mediaAttachmentsTotalSizeLimitInMb")]
+        nint MediaAttachmentsTotalSizeLimitInMb { get; }
+
+        // @property (readonly, nonatomic) NSArray<NSString *> * _Nonnull emailBodiesAllowedContentTypes;
+        [Export("emailBodiesAllowedContentTypes")]
+        string[] EmailBodiesAllowedContentTypes { get; }
+
+        // @property (readonly, nonatomic) NSArray<NSString *> * _Nonnull emailHistoriesAllowedContentTypes;
+        [Export("emailHistoriesAllowedContentTypes")]
+        string[] EmailHistoriesAllowedContentTypes { get; }
     }
 
     // @interface TCHConversation : NSObject
@@ -464,6 +520,10 @@ namespace Twilio.Conversations
         [NullAllowed, Export("lastReadMessageIndex", ArgumentSemantic.Copy)]
         NSNumber LastReadMessageIndex { get; }
 
+        // @property (readonly, nonatomic) TCHConversationLimits * _Nonnull limits;
+        [Export("limits")]
+        TCHConversationLimits Limits { get; }
+
         // -(TCHJsonAttributes * _Nullable)attributes;
         [NullAllowed, Export("attributes")]
         TCHJsonAttributes Attributes { get; }
@@ -500,7 +560,11 @@ namespace Twilio.Conversations
         [Export("typing")]
         void Typing();
 
-        // -(void)sendMessageWithOptions:(TCHMessageOptions * _Nonnull)options completion:(TCHMessageCompletion _Nullable)completion;
+        // -(TCHMessageBuilder * _Nonnull)prepareMessage;
+        [Export("prepareMessage")]
+        TCHMessageBuilder PrepareMessage();
+
+        // -(void)sendMessageWithOptions:(TCHMessageOptions * _Nonnull)options completion:(TCHMessageCompletion _Nullable)completion __attribute__((deprecated("Replaced by TCHConversation.prepareMessage().buildAndSend(completion:)")));
         [Export("sendMessageWithOptions:completion:")]
         void SendMessageWithOptions(TCHMessageOptions options, [NullAllowed] TCHMessageCompletion completion);
 
@@ -649,53 +713,175 @@ namespace Twilio.Conversations
         void ConversationParticipantUserUnSubscribed(TwilioConversationsClient client, TCHConversation conversation, TCHParticipant participant, TCHUser user);
     }
 
-    // @interface TCHParticipant : NSObject
+    // @interface TCHDetailedDeliveryReceipt : NSObject
     [BaseType(typeof(NSObject))]
-    interface TCHParticipant
+    [DisableDefaultCtor]
+    interface TCHDetailedDeliveryReceipt
     {
-        // @property (readonly, nonatomic, weak) TCHConversation * _Nullable conversation;
-        [NullAllowed, Export("conversation", ArgumentSemantic.Weak)]
-        TCHConversation Conversation { get; }
+        // @property (readonly) TCHDeliveryStatus status;
+        [Export("status")]
+        TCHDeliveryStatus Status { get; }
 
+        // @property (readonly) NSString * sid;
+        [Export("sid")]
+        string Sid { get; }
+
+        // @property (readonly) NSString * messageSid;
+        [Export("messageSid")]
+        string MessageSid { get; }
+
+        // @property (readonly) NSString * conversationSid;
+        [Export("conversationSid")]
+        string ConversationSid { get; }
+
+        // @property (readonly) NSString * channelMessageSid;
+        [Export("channelMessageSid")]
+        string ChannelMessageSid { get; }
+
+        // @property (readonly) NSString * participantSid;
+        [Export("participantSid")]
+        string ParticipantSid { get; }
+
+        // @property (readonly) NSInteger errorCode;
+        [Export("errorCode")]
+        nint ErrorCode { get; }
+
+        // @property (readonly) NSDate * dateCreatedAsDate;
+        [Export("dateCreatedAsDate")]
+        NSDate DateCreatedAsDate { get; }
+
+        // @property (readonly) NSDate * dateUpdatedAsDate;
+        [Export("dateUpdatedAsDate")]
+        NSDate DateUpdatedAsDate { get; }
+    }
+
+    // @interface TCHMedia : NSObject
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface TCHMedia : INativeObject
+    {
+        // @property (readonly, nonatomic) NSString * _Nonnull sid;
+        [Export("sid")]
+        string Sid { get; }
+
+        // @property (readonly, nonatomic) NSString * _Nonnull contentType;
+        [Export("contentType")]
+        string ContentType { get; }
+
+        // @property (readonly, nonatomic) TCHMediaCategory category;
+        [Export("category")]
+        TCHMediaCategory Category { get; }
+
+        // @property (readonly, nonatomic) NSString * _Nullable filename;
+        [NullAllowed, Export("filename")]
+        string Filename { get; }
+
+        // @property (readonly, nonatomic) NSUInteger size;
+        [Export("size")]
+        nuint Size { get; }
+
+        // -(void)getTemporaryContentUrlWithCompletion:(TCHURLCompletion _Nonnull)completion __attribute__((swift_name("getTemporaryContentUrl(completion:)")));
+        [Export("getTemporaryContentUrlWithCompletion:")]
+        void GetTemporaryContentUrlWithCompletion(TCHURLCompletion completion);
+    }
+
+    // @interface TCHUnsentMessage : NSObject
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface TCHUnsentMessage
+    {
+        // -(TCHCancellationToken * _Nonnull)sendWithCompletion:(TCHMessageCompletion _Nullable)completion __attribute__((swift_name("send(comletion:)")));
+        [Export("sendWithCompletion:")]
+        TCHCancellationToken SendWithCompletion([NullAllowed] TCHMessageCompletion completion);
+    }
+
+    // @interface TCHMessage : NSObject
+    [BaseType(typeof(NSObject))]
+    interface TCHMessage
+    {
         // @property (readonly, copy, nonatomic) NSString * _Nullable sid;
         [NullAllowed, Export("sid")]
         string Sid { get; }
 
-        // @property (readonly, nonatomic, strong) NSString * _Nullable identity;
-        [NullAllowed, Export("identity", ArgumentSemantic.Strong)]
-        string Identity { get; }
+        // @property (readonly, copy, nonatomic) NSNumber * _Nullable index;
+        [NullAllowed, Export("index", ArgumentSemantic.Copy)]
+        NSNumber Index { get; }
 
-        // @property (readonly, nonatomic) TCHParticipantType type;
-        [Export("type")]
-        TCHParticipantType Type { get; }
+        // @property (readonly, copy, nonatomic) NSString * _Nullable author;
+        [NullAllowed, Export("author")]
+        string Author { get; }
 
-        // @property (readonly, copy, nonatomic) NSNumber * _Nullable lastReadMessageIndex;
-        [NullAllowed, Export("lastReadMessageIndex", ArgumentSemantic.Copy)]
-        NSNumber LastReadMessageIndex { get; }
+        // @property (readonly, copy, nonatomic) NSString * _Nullable subject;
+        [NullAllowed, Export("subject")]
+        string Subject { get; }
 
-        // @property (readonly, copy, nonatomic) NSString * _Nullable lastReadTimestamp;
-        [NullAllowed, Export("lastReadTimestamp")]
-        string LastReadTimestamp { get; }
+        // @property (readonly, copy, nonatomic) NSString * _Nullable body;
+        [NullAllowed, Export("body")]
+        string Body { get; }
 
-        // @property (readonly, nonatomic, strong) NSDate * _Nullable lastReadTimestampAsDate;
-        [NullAllowed, Export("lastReadTimestampAsDate", ArgumentSemantic.Strong)]
-        NSDate LastReadTimestampAsDate { get; }
+        // @property (readonly, assign, nonatomic) TCHMessageType messageType __attribute__((deprecated("")));
+        [Export("messageType", ArgumentSemantic.Assign)]
+        TCHMessageType MessageType { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nullable mediaSid __attribute__((deprecated("Use TCHMedia instead.")));
+        [NullAllowed, Export("mediaSid")]
+        string MediaSid { get; }
+
+        // @property (readonly, assign, nonatomic) NSUInteger mediaSize __attribute__((deprecated("Use TCHMedia instead.")));
+        [Export("mediaSize")]
+        nuint MediaSize { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nullable mediaType __attribute__((deprecated("Use TCHMedia instead.")));
+        [NullAllowed, Export("mediaType")]
+        string MediaType { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nullable mediaFilename __attribute__((deprecated("Use TCHMedia instead.")));
+        [NullAllowed, Export("mediaFilename")]
+        string MediaFilename { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nullable participantSid;
+        [NullAllowed, Export("participantSid")]
+        string ParticipantSid { get; }
+
+        // @property (readonly, copy, nonatomic) TCHParticipant * _Nullable participant;
+        [NullAllowed, Export("participant", ArgumentSemantic.Copy)]
+        TCHParticipant Participant { get; }
 
         // @property (readonly, copy, nonatomic) NSString * _Nullable dateCreated;
         [NullAllowed, Export("dateCreated")]
         string DateCreated { get; }
 
-        // @property (readonly, copy, nonatomic) NSDate * _Nullable dateCreatedAsDate;
-        [NullAllowed, Export("dateCreatedAsDate", ArgumentSemantic.Copy)]
+        // @property (readonly, nonatomic, strong) NSDate * _Nullable dateCreatedAsDate;
+        [NullAllowed, Export("dateCreatedAsDate", ArgumentSemantic.Strong)]
         NSDate DateCreatedAsDate { get; }
 
         // @property (readonly, copy, nonatomic) NSString * _Nullable dateUpdated;
         [NullAllowed, Export("dateUpdated")]
         string DateUpdated { get; }
 
-        // @property (readonly, copy, nonatomic) NSDate * _Nullable dateUpdatedAsDate;
-        [NullAllowed, Export("dateUpdatedAsDate", ArgumentSemantic.Copy)]
+        // @property (readonly, nonatomic, strong) NSDate * _Nullable dateUpdatedAsDate;
+        [NullAllowed, Export("dateUpdatedAsDate", ArgumentSemantic.Strong)]
         NSDate DateUpdatedAsDate { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nullable lastUpdatedBy;
+        [NullAllowed, Export("lastUpdatedBy")]
+        string LastUpdatedBy { get; }
+
+        // @property (readonly) TCHAggregatedDeliveryReceipt * _Nullable aggregatedDeliveryReceipt;
+        [NullAllowed, Export("aggregatedDeliveryReceipt")]
+        TCHAggregatedDeliveryReceipt AggregatedDeliveryReceipt { get; }
+
+        // @property (readonly) NSArray<TCHMedia *> * _Nonnull attachedMedia;
+        [Export("attachedMedia")]
+        TCHMedia[] AttachedMedia { get; }
+
+        // -(void)getDetailedDeliveryReceiptsWithCompletion:(TCHDetailedDeliveryReceiptsCompletion _Nonnull)completion;
+        [Export("getDetailedDeliveryReceiptsWithCompletion:")]
+        void GetDetailedDeliveryReceiptsWithCompletion(TCHDetailedDeliveryReceiptsCompletion completion);
+
+        // -(void)updateBody:(NSString * _Nonnull)body completion:(TCHCompletion _Nullable)completion;
+        [Export("updateBody:completion:")]
+        void UpdateBody(string body, [NullAllowed] TCHCompletion completion);
 
         // -(TCHJsonAttributes * _Nullable)attributes;
         [NullAllowed, Export("attributes")]
@@ -705,13 +891,68 @@ namespace Twilio.Conversations
         [Export("setAttributes:completion:")]
         void SetAttributes([NullAllowed] TCHJsonAttributes attributes, [NullAllowed] TCHCompletion completion);
 
-        // -(void)subscribedUserWithCompletion:(TCHUserCompletion _Nonnull)completion;
-        [Export("subscribedUserWithCompletion:")]
-        void SubscribedUserWithCompletion(TCHUserCompletion completion);
+        // -(BOOL)hasMedia __attribute__((deprecated("Use attachedMedia instead")));
+        [Export("hasMedia")]
+        bool HasMedia { get; }
 
-        // -(void)removeWithCompletion:(TCHCompletion _Nullable)completion;
-        [Export("removeWithCompletion:")]
-        void RemoveWithCompletion([NullAllowed] TCHCompletion completion);
+        // -(void)getMediaContentTemporaryUrlWithCompletion:(TCHStringCompletion _Nonnull)completion __attribute__((deprecated("Use [TCHMedia getTemporaryContentUrlWithCompletion:] instead.")));
+        [Export("getMediaContentTemporaryUrlWithCompletion:")]
+        void GetMediaContentTemporaryUrlWithCompletion(TCHStringCompletion completion);
+
+        // -(NSArray<TCHMedia *> * _Nonnull)getMediaByCategories:(NSSet<NSNumber *> * _Nonnull)categories;
+        [Export("getMediaByCategories:")]
+        TCHMedia[] GetMediaByCategories(NSSet<NSNumber> categories);
+
+        // -(TCHMedia * _Nullable)getEmailBody __attribute__((swift_name("getEmailBody()")));
+        [NullAllowed, Export("getEmailBody")]
+        TCHMedia EmailBody { get; }
+
+        // -(TCHMedia * _Nullable)getEmailBodyForContentType:(NSString * _Nonnull)contentType __attribute__((swift_name("getEmailBody(contentType:)")));
+        [Export("getEmailBodyForContentType:")]
+        [return: NullAllowed]
+        TCHMedia GetEmailBodyForContentType(string contentType);
+
+        // -(TCHMedia * _Nullable)getEmailHistory __attribute__((swift_name("getEmailHistory()")));
+        [NullAllowed, Export("getEmailHistory")]
+        TCHMedia EmailHistory { get; }
+
+        // -(TCHMedia * _Nullable)getEmailHistoryForContentType:(NSString * _Nonnull)contentType __attribute__((swift_name("getEmailHistory(contentType:)")));
+        [Export("getEmailHistoryForContentType:")]
+        [return: NullAllowed]
+        TCHMedia GetEmailHistoryForContentType(string contentType);
+
+        // -(TCHCancellationToken * _Nullable)getTemporaryContentUrlsForAttachedMediaWithCompletion:(TCHMediaSidsCompletion _Nonnull)completion __attribute__((swift_name("getTemporaryContentUrlsForAttachedMedia(completion:)")));
+        [Export("getTemporaryContentUrlsForAttachedMediaWithCompletion:")]
+        [return: NullAllowed]
+        TCHCancellationToken GetTemporaryContentUrlsForAttachedMediaWithCompletion(TCHMediaSidsCompletion completion);
+
+        // -(TCHCancellationToken * _Nullable)getTemporaryContentUrlsForMedia:(NSSet<TCHMedia *> * _Nonnull)media completion:(TCHMediaSidsCompletion _Nonnull)completion __attribute__((swift_name("getTemporaryContentUrlsFor(media:completion:)")));
+        [Export("getTemporaryContentUrlsForMedia:completion:")]
+        [return: NullAllowed]
+        TCHCancellationToken GetTemporaryContentUrlsForMedia(NSSet<TCHMedia> media, TCHMediaSidsCompletion completion);
+
+        // -(TCHCancellationToken * _Nullable)getTemporaryContentUrlsForMediaSids:(NSSet<NSString *> * _Nonnull)sids completion:(TCHMediaSidsCompletion _Nonnull)completion __attribute__((swift_name("getTemporaryContentUrlsFor(mediaSids:completion:)")));
+        [Export("getTemporaryContentUrlsForMediaSids:completion:")]
+        [return: NullAllowed]
+        TCHCancellationToken GetTemporaryContentUrlsForMediaSids(NSSet<NSString> sids, TCHMediaSidsCompletion completion);
+    }
+
+    // @interface TCHMessageOptions : NSObject
+    [BaseType(typeof(NSObject))]
+    interface TCHMessageOptions
+    {
+        // -(instancetype _Nonnull)withBody:(NSString * _Nonnull)body;
+        [Export("withBody:")]
+        TCHMessageOptions WithBody(string body);
+
+        // -(instancetype _Nonnull)withMediaStream:(NSInputStream * _Nonnull)mediaStream contentType:(NSString * _Nonnull)contentType defaultFilename:(NSString * _Nullable)defaultFilename onStarted:(TCHMediaOnStarted _Nullable)onStarted onProgress:(TCHMediaOnProgress _Nullable)onProgress onCompleted:(TCHMediaOnCompleted _Nullable)onCompleted;
+        [Export("withMediaStream:contentType:defaultFilename:onStarted:onProgress:onCompleted:")]
+        TCHMessageOptions WithMediaStream(NSInputStream mediaStream, string contentType, [NullAllowed] string defaultFilename, [NullAllowed] TCHMediaOnStarted onStarted, [NullAllowed] TCHMediaOnProgress onProgress, [NullAllowed] TCHMediaOnCompleted onCompleted);
+
+        // -(instancetype _Nullable)withAttributes:(TCHJsonAttributes * _Nonnull)attributes error:(TCHError * _Nullable * _Nullable)error;
+        [Export("withAttributes:error:")]
+        [return: NullAllowed]
+        TCHMessageOptions WithAttributes(TCHJsonAttributes attributes, [NullAllowed] out TCHError error);
     }
 
     // @interface TwilioConversationsClient : NSObject
@@ -810,6 +1051,16 @@ namespace Twilio.Conversations
         // -(void)shutdown;
         [Export("shutdown")]
         void Shutdown();
+
+        // -(TCHCancellationToken * _Nullable)getTemporaryContentUrlsForMedia:(NSSet<TCHMedia *> * _Nonnull)media completion:(TCHMediaSidsCompletion _Nonnull)completion __attribute__((swift_name("getTemporaryContentUrlsFor(media:completion:)")));
+        [Export("getTemporaryContentUrlsForMedia:completion:")]
+        [return: NullAllowed]
+        TCHCancellationToken GetTemporaryContentUrlsForMedia(NSSet<TCHMedia> media, TCHMediaSidsCompletion completion);
+
+        // -(TCHCancellationToken * _Nullable)getTemporaryContentUrlsForMediaSids:(NSSet<NSString *> * _Nonnull)sids completion:(TCHMediaSidsCompletion _Nonnull)completion __attribute__((swift_name("getTemporaryContentUrlsFor(mediaSids:completion:)")));
+        [Export("getTemporaryContentUrlsForMediaSids:completion:")]
+        [return: NullAllowed]
+        TCHCancellationToken GetTemporaryContentUrlsForMediaSids(NSSet<NSString> sids, TCHMediaSidsCompletion completion);
     }
 
     // @interface TwilioConversationsClientProperties : NSObject

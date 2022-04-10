@@ -1,11 +1,27 @@
-﻿<metadata> 
+﻿<metadata>
+
+	<!--Rename package & Attributes class-->
 	<attr path="/api/package[@name='com.twilio.conversations']" name="managedName">Twilio.Conversations</attr>
 	<attr path="/api/package[@name='com.twilio.conversations']/class[@name='Attributes']" name="managedName">JsonAttributes</attr>
-	
-	<!--These methods throw a Java.Lang.NoSuchMethodException due to certain binding issues, so remove them and implement them manually. -->
+
+	<!--Remove Internal Namespaces-->
+	<remove-node path="/api/package[@name='com.twilio.conversations.extensions']"/>
+	<remove-node path="/api/package[@name='com.twilio.conversations.internal']"/>
+	<remove-node path="/api/package[@name='com.twilio.conversations.media']"/>
+	<remove-node path="/api/package[@name='com.twilio.conversations.util']"/>
+	<remove-node path="/api/package[@name='com.twilio.messaging.internal']"/>
+	<remove-node path="/api/package[@name='com.twilio.messaging.transport']"/>
+
+	<!--Companion classes-->
+	<attr path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion']" name="managedName">CompanionStatic</attr>
+	<remove-node path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion' and count(method)=0 and count(field)=0]" />
+
+	<!--Remove Extension classes-->
+	<remove-node path="/api/package[@name='com.twilio.conversations']/class[@name='ConversationsExceptionKt']"/>
+
+	<!--These methods throw a Java.Lang.NoSuchMethodException due to certain binding issues, so remove them and implement them manually.-->
 	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='setLogLevel']"/>
 	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='create']"/>
 	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient.Properties']/method[@name='newBuilder']"/>
-	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='Message']/method[@name='options']"/>
- 
+
 </metadata>

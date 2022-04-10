@@ -13,7 +13,9 @@
 		<tags>twilio conversations xamarin ios android</tags>
 		<dependencies> 
 			<group targetFramework="MonoAndroid44">
-				<dependency id="Xamarin.ReLinker" version="1.4.3" />
+				<dependency id="Xamarin.Kotlin.StdLib" version="1.5.31" />
+				<dependency id="Xamarin.Kotlin.StdLib.Jdk8" version="1.5.0" />
+				<dependency id="Xamarin.ReLinker" version="1.4.4" />
 				<dependency id="Square.OkHttp3" version="4.9.1" />
 			</group>
 			<group targetFramework="Xamarin.iOS10"/>

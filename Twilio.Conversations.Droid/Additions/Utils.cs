@@ -1,5 +1,6 @@
 ﻿using Android.Runtime;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Twilio.Conversations
 {
@@ -17,6 +18,23 @@ namespace Twilio.Conversations
             }
 
             return result;
+        }
+
+        public static Dictionary<string, string> ConvertJavaStringMap(Java.Util.IMap map)
+        {
+            if (map == null)
+                return null;
+
+            Dictionary<string, string> result = new();
+            foreach (Java.Util.IMapEntry entry in map.EntrySet())
+                result.Add(entry.Key.ToString(), entry.Value?.ToString());
+
+            return result;
+        }
+
+        public static CancellationTokenRegistration CancelWith(this ICancellationToken twilioCancellationToken, CancellationToken cancellationToken)
+        {
+            return cancellationToken.Register(twilioCancellationToken.Cancel);
         }
     }
 }

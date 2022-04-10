@@ -117,13 +117,6 @@ namespace Twilio.Conversations
             await listener.Task;
         }
 
-        public async Task<IMessage> SendMessageAsync(IMessageOptions options)
-        {
-            var listener = new AsyncCallbackListener<IMessage>();
-            SendMessage(options, listener);
-            return await listener.GetResultAsync();
-        }
-
         public async Task<long> SetAllMessagesReadAsync()
         {
             var listener = new AsyncCallbackListener<Java.Lang.Long>();
@@ -139,14 +132,14 @@ namespace Twilio.Conversations
         }
 
         public async Task SetAttributesAsync(JsonAttributes attributes)
-        { 
+        {
             var listener = new AsyncStatusListener();
             SetAttributes(attributes, listener);
             await listener.Task;
         }
 
         public async Task SetFriendlyNameAsync(string friendlyName)
-        { 
+        {
             var listener = new AsyncStatusListener();
             SetFriendlyName(friendlyName, listener);
             await listener.Task;

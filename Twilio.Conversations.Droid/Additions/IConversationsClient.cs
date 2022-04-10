@@ -1,4 +1,8 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
+using Javax.Crypto;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Twilio.Conversations
@@ -31,6 +35,22 @@ namespace Twilio.Conversations
             var listener = new AsyncCallbackListener<IConversation>();
             GetConversation(conversationSidOrUniqueName, listener);
             return await listener.GetResultAsync();
+        }
+
+        public async Task<Dictionary<string, string>> GetTemporaryContentUrlsForMediaAsync(IList<IMedia> media, CancellationToken cancellationToken = default)
+        {
+            AsyncCallbackListener<Java.Util.IMap> listener = new();
+            using var _ = GetTemporaryContentUrlsForMedia(media, listener).CancelWith(cancellationToken);
+            var map = await listener.GetResultAsync();
+            return Utils.ConvertJavaStringMap(map);
+        }
+
+        public async Task<Dictionary<string, string>> GetTemporaryContentUrlsForMediaSidsAsync(IList<string> mediaSids, CancellationToken cancellationToken = default)
+        {
+            AsyncCallbackListener<Java.Util.IMap> listener = new();
+            using var _ = GetTemporaryContentUrlsForMediaSids(mediaSids, listener).CancelWith(cancellationToken);
+            var map = await listener.GetResultAsync();
+            return Utils.ConvertJavaStringMap(map);
         }
 
         public async Task RegisterFCMTokenAsync(ConversationsClientFCMToken token)

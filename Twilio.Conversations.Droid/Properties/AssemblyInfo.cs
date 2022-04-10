@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Twilio.Conversations.Droid")]
-[assembly: AssemblyDescription("Twilio Conversations SDK for Xamarin.Android apps")]
+[assembly: AssemblyDescription("Twilio Conversations SDK for Xamarin.Android")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Twilio")]
 [assembly: AssemblyProduct("Twilio.Conversations.Droid")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -20,5 +20,5 @@ using System.Runtime.InteropServices;
 //      Minor Version 
 //      Build Number
 //      Revision
-[assembly: AssemblyVersion("1.0.2.0")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+[assembly: AssemblyVersion("3.1.0.0")]
+[assembly: AssemblyFileVersion("3.1.0.0")]

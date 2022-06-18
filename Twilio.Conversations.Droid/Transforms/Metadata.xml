@@ -15,9 +15,12 @@
 	<!--Companion classes-->
 	<attr path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion']" name="managedName">CompanionStatic</attr>
 	<remove-node path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion' and count(method)=0 and count(field)=0]" />
+	<remove-node path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion']/constructor" />
 
-	<!--Remove Extension classes-->
-	<remove-node path="/api/package[@name='com.twilio.conversations']/class[@name='ConversationsExceptionKt']"/>
+	<!--Remove Kotlin Extension classes-->
+	<remove-node path="/api/package/class[substring(@name,string-length(@name)-1)='Kt']" />
+	<remove-node path="/api/package[@name='com.twilio.conversations']/class[@name='MediaUploadListenerBuilder']" />
+	<remove-node path="/api/package/class[substring(@name,string-length(@name)-12)='.DefaultImpls']" />
 
 	<!--These methods throw a Java.Lang.NoSuchMethodException due to certain binding issues, so remove them and implement them manually.-->
 	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='setLogLevel']"/>

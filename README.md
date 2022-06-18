@@ -6,6 +6,6 @@ Xamarin Android and iOS bindings for the Twilio Conversation SDKs.
 ## Documentation
 General Documentation: https://www.twilio.com/docs/conversations/fundamentals
 
-Android SDK API Reference: http://media.twiliocdn.com/sdk/android/conversations/releases/1.4.1/docs/
+Android SDK API Reference: https://media.twiliocdn.com/sdk/android/conversations/releases/3.1.0/docs/
 
-iOS SDK API Reference: http://media.twiliocdn.com/sdk/ios/convo/releases/1.0.0/docs/
+iOS SDK API Reference: https://media.twiliocdn.com/sdk/ios/conversations/releases/2.2.2/docs/

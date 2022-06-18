@@ -61,6 +61,7 @@
     <Compile Include="Additions\IConversationUnsentMessage.cs" />
     <Compile Include="Additions\IMedia.cs" />
     <Compile Include="Additions\IMessage.cs" />
+    <Compile Include="Additions\IParticipant.cs" />
     <Compile Include="Additions\IUser.cs" />
     <Compile Include="Additions\MediaUploadListener.cs" />
     <Compile Include="Additions\TwilioException.cs" />

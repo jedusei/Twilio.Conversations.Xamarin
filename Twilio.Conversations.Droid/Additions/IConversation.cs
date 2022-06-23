@@ -65,7 +65,7 @@ namespace Twilio.Conversations
         {
             var listener = new AsyncCallbackListener<Java.Lang.Long>();
             GetMessagesCount(listener);
-            return (await listener.GetResultAsync()).LongValue();
+            return (await listener.GetResultAsync())?.LongValue() ?? 0;
         }
 
         public async Task<long> GetParticipantsCountAsync()
@@ -79,7 +79,7 @@ namespace Twilio.Conversations
         {
             var listener = new AsyncCallbackListener<Java.Lang.Long>();
             GetUnreadMessagesCount(listener);
-            return (await listener.GetResultAsync()).LongValue();
+            return (await listener.GetResultAsync())?.LongValue() ?? 0;
         }
 
         public async Task JoinAsync()

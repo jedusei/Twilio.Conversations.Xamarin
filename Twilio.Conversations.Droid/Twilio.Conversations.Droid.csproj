@@ -51,6 +51,8 @@
     <Compile Include="Additions\AsyncCallbackListener.cs" />
     <Compile Include="Additions\AsyncStatusListener.cs" />
     <Compile Include="Additions\CallbackListener.cs" />
+    <Compile Include="Additions\Fixes\ICallbackListener.cs" />
+    <Compile Include="Additions\Fixes\ICallbackListenerInvoker.cs" />
     <Compile Include="Additions\Fixes\IConversationsClient.cs" />
     <Compile Include="Additions\Fixes\IStatusListener.cs" />
     <Compile Include="Additions\Fixes\IStatusListenerInvoker.cs" />

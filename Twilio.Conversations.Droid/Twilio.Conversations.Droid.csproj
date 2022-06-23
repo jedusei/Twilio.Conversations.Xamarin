@@ -114,7 +114,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Xamarin.Kotlin.StdLib">
-      <Version>1.5.31</Version>
+      <Version>1.5.31.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8">
       <Version>1.5.0</Version>

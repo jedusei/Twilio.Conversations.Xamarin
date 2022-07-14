@@ -3,6 +3,8 @@
 	<!--Rename package & Attributes class-->
 	<attr path="/api/package[@name='com.twilio.conversations']" name="managedName">Twilio.Conversations</attr>
 	<attr path="/api/package[@name='com.twilio.conversations']/class[@name='Attributes']" name="managedName">JsonAttributes</attr>
+	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient.Properties']" name="managedName">IProperties</attr>
+	
 
 	<!--Remove Internal Namespaces-->
 	<remove-node path="/api/package[@name='com.twilio.conversations.extensions']"/>
@@ -23,8 +25,12 @@
 	<remove-node path="/api/package/class[substring(@name,string-length(@name)-12)='.DefaultImpls']" />
 
 	<!--These methods throw a Java.Lang.NoSuchMethodException due to certain binding issues, so remove them and implement them manually.-->
-	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='setLogLevel']"/>
+	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='getSdkVersion']"/>
+	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='setLogLevel']"/>-
 	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='create']"/>
 	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient.Properties']/method[@name='newBuilder']"/>
+
+	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='CallbackListener']/method[@name='onError' and count(parameter)=1 and parameter[1][@type='com.twilio.conversations.ErrorInfo']]" name="argsType">CallbackListenerErrorEventArgs</attr>
+	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='StatusListener']/method[@name='onError' and count(parameter)=1 and parameter[1][@type='com.twilio.conversations.ErrorInfo']]" name="argsType">StatusListenerErrorEventArgs</attr>
 
 </metadata>

@@ -152,7 +152,7 @@ namespace Twilio.Conversations
             return (await listener.GetResultAsync()).LongValue();
         }
 
-        public async Task SetNotificationLevelAsync(ConversationNotificationLevel notificationLevel)
+        public async Task SetNotificationLevelAsync(IConversation.NotificationLevel notificationLevel)
         {
             var listener = new AsyncStatusListener();
             SetNotificationLevel(notificationLevel, listener);

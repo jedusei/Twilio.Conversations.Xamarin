@@ -1,6 +1,4 @@
-﻿using Android.App;
-using Android.Content;
-using Javax.Crypto;
+﻿using Android.Content;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +7,7 @@ namespace Twilio.Conversations
 {
     public partial interface IConversationsClient
     {
-        public static async Task<IConversationsClient> CreateAsync(Context context, string token, IConversationsClientProperties properties)
+        public static async Task<IConversationsClient> CreateAsync(Context context, string token, IProperties properties)
         {
             var listener = new AsyncCallbackListener<IConversationsClient>();
             Create(context, token, properties, listener);
@@ -53,14 +51,14 @@ namespace Twilio.Conversations
             return Utils.ConvertJavaStringMap(map);
         }
 
-        public async Task RegisterFCMTokenAsync(ConversationsClientFCMToken token)
+        public async Task RegisterFCMTokenAsync(FCMToken token)
         {
             var listener = new AsyncStatusListener();
             RegisterFCMToken(token, listener);
             await listener.Task;
         }
 
-        public async Task UnegisterFCMTokenAsync(ConversationsClientFCMToken token)
+        public async Task UnegisterFCMTokenAsync(FCMToken token)
         {
             var listener = new AsyncStatusListener();
             UnregisterFCMToken(token, listener);

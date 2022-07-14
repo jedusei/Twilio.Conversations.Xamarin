@@ -5,6 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <_EnableInterfaceMembers>true</_EnableInterfaceMembers>
     <ProjectGuid>{ED7A4DDD-6EE7-4529-9DE2-AB9D9593DAB2}</ProjectGuid>
     <ProjectTypeGuids>{10368E6C-D01B-4462-8E8B-01FC667A7035};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{77efb91c-a7e9-4b0e-a7c5-31eeec3c6d46}</TemplateGuid>
@@ -51,16 +52,12 @@
     <Compile Include="Additions\AsyncCallbackListener.cs" />
     <Compile Include="Additions\AsyncStatusListener.cs" />
     <Compile Include="Additions\CallbackListener.cs" />
-    <Compile Include="Additions\Fixes\ICallbackListener.cs" />
-    <Compile Include="Additions\Fixes\ICallbackListenerInvoker.cs" />
     <Compile Include="Additions\Fixes\IConversationsClient.cs" />
-    <Compile Include="Additions\Fixes\IStatusListener.cs" />
-    <Compile Include="Additions\Fixes\IStatusListenerInvoker.cs" />
     <Compile Include="Additions\IConversation.cs" />
-    <Compile Include="Additions\IConversationMessageBuilder.cs" />
+    <Compile Include="Additions\IConversation.IMessageBuilder.cs" />
     <Compile Include="Additions\IConversationsClient.cs" />
-    <Compile Include="Additions\IConversationsClientConversationBuilder.cs" />
-    <Compile Include="Additions\IConversationUnsentMessage.cs" />
+    <Compile Include="Additions\IConversationsClient.IConversationBuilder.cs" />
+    <Compile Include="Additions\IConversation.IUnsentMessage.cs" />
     <Compile Include="Additions\IMedia.cs" />
     <Compile Include="Additions\IMessage.cs" />
     <Compile Include="Additions\IParticipant.cs" />
@@ -128,6 +125,7 @@
   <ItemGroup>
     <LibraryProjectZip Include="Jars\twilio-conversations-android-3.1.0.aar" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

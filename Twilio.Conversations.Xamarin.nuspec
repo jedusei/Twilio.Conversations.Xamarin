@@ -2,14 +2,14 @@
 <package>
 	<metadata>
 		<id>Twilio.Conversations.Xamarin</id>
-		<version>2.0.1</version>
+		<version>2.0.2</version>
 		<authors>Twilio, Joseph Edusei</authors>
 		<owners>jedusei</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<license type="expression">MIT</license>
 		<projectUrl>https://github.com/jedusei/Twilio.Conversations.Xamarin</projectUrl>
 		<description>Xamarin.Android and Xamarin.iOS Bindings for the Twilio Conversation Android and iOS SDKs respectively.</description>
-		<releaseNotes>This release includes bindings for the Twilio Conversations Android SDK (3.1.0) and iOS SDK (2.2.2).</releaseNotes>
+		<releaseNotes>This release includes bindings for the Twilio Conversations Android SDK (3.1.0) and iOS SDK (2.2.3).</releaseNotes>
 		<tags>twilio conversations xamarin ios android</tags>
 		<dependencies> 
 			<group targetFramework="MonoAndroid44">

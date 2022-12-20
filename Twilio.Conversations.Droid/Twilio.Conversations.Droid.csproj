@@ -63,7 +63,6 @@
     <Compile Include="Additions\IParticipant.cs" />
     <Compile Include="Additions\IUser.cs" />
     <Compile Include="Additions\MediaUploadListener.cs" />
-    <Compile Include="Additions\TwilioException.cs" />
     <Compile Include="Additions\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,63 +74,66 @@
   <ItemGroup>
     <Content Include="Additions\AboutAdditions.txt" />
     <Content Include="Jars\AboutJars.txt" />
-    <EmbeddedReferenceJar Include="Jars\ktor-http-cio-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-http-cio-jvm-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-io-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-io-jvm-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-network-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-utils-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-client-json-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\kotlinx-serialization-json-1.2.1.jar" />
-    <EmbeddedReferenceJar Include="Jars\kotlinx-serialization-core-1.2.1.jar" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedReferenceJar Include="Jars\atomicfu-0.16.1.jar" />
-    <EmbeddedReferenceJar Include="Jars\atomicfu-jvm-0.16.1.jar" />
-    <JavaSourceJar Include="Jars\conversations-android-3.1.0-sources.jar" />
-    <EmbeddedReferenceJar Include="Jars\kotlinx-coroutines-android-1.5.0-native-mt.jar" />
-    <EmbeddedReferenceJar Include="Jars\kotlinx-coroutines-core-jvm-1.5.0-native-mt.jar" />
-    <EmbeddedReferenceJar Include="Jars\kotlinx-serialization-core-jvm-1.2.1.jar" />
-    <EmbeddedReferenceJar Include="Jars\kotlinx-serialization-json-jvm-1.2.1.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-client-android-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-client-core-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-client-core-jvm-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-client-json-jvm-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-client-serialization-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-client-serialization-jvm-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-http-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-http-jvm-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-network-jvm-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\ktor-utils-jvm-1.6.0.jar" />
-    <EmbeddedReferenceJar Include="Jars\nv-websocket-client-2.10.jar" />
-    <EmbeddedReferenceJar Include="Jars\slf4j-api-1.7.30.jar" />
+    <EmbeddedReferenceJar Include="Jars\kotlinx-serialization-json-jvm-1.4.1.jar" />
+    <EmbeddedReferenceJar Include="Jars\kotlinx-serialization-json-1.4.1.jar" />
+    <EmbeddedReferenceJar Include="Jars\kotlinx-serialization-core-jvm-1.4.1.jar" />
+    <EmbeddedReferenceJar Include="Jars\kotlinx-serialization-core-1.4.1.jar" />
+    <EmbeddedReferenceJar Include="Jars\slf4j-api-1.7.36.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-websockets-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-websocket-serialization-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-utils-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-serialization-kotlinx-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-serialization-kotlinx-json-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-serialization-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-io-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-http-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-events-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-client-core-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-client-content-negotiation-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-client-android-jvm-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\atomicfu-0.18.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\atomicfu-jvm-0.18.3.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-client-android-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-client-content-negotiation-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-client-core-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-events-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-http-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-io-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-serialization-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-serialization-kotlinx-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-serialization-kotlinx-json-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-utils-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-websocket-serialization-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\ktor-websockets-2.1.2.jar" />
+    <EmbeddedReferenceJar Include="Jars\nv-websocket-client-2.14.jar" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="IsExternalInit">
-      <Version>1.0.2</Version>
+      <Version>1.0.3</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Xamarin.Kotlin.StdLib">
-      <Version>1.5.31.4</Version>
+    <PackageReference Include="Xamarin.AndroidX.Security.SecurityCrypto">
+      <Version>1.0.0</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Kotlin.StdLib.Jdk8">
-      <Version>1.5.0</Version>
+    <PackageReference Include="Xamarin.KotlinX.Coroutines.Android">
+      <Version>1.6.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.KotlinX.Coroutines.Core">
+      <Version>1.6.4.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.ReLinker">
       <Version>1.4.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\twilio-conversations-android-3.1.0.aar" />
+    <ProjectReference Include="..\Twilsock\Twilsock.csproj">
+      <Project>{8b3acd31-9468-4bd5-9779-ff77fec3e004}</Project>
+      <Name>Twilsock</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <LibraryProjectZip Include="Jars\conversations-android-4.0.2.aar" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

@@ -4,19 +4,9 @@
 	<attr path="/api/package[@name='com.twilio.conversations']" name="managedName">Twilio.Conversations</attr>
 	<attr path="/api/package[@name='com.twilio.conversations']/class[@name='Attributes']" name="managedName">JsonAttributes</attr>
 	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient.Properties']" name="managedName">IProperties</attr>
-	
-
-	<!--Remove Internal Namespaces-->
-	<remove-node path="/api/package[@name='com.twilio.conversations.extensions']"/>
-	<remove-node path="/api/package[@name='com.twilio.conversations.internal']"/>
-	<remove-node path="/api/package[@name='com.twilio.conversations.media']"/>
-	<remove-node path="/api/package[@name='com.twilio.conversations.util']"/>
-	<remove-node path="/api/package[@name='com.twilio.messaging.internal']"/>
-	<remove-node path="/api/package[@name='com.twilio.messaging.transport']"/>
 
 	<!--Companion classes-->
 	<attr path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion']" name="managedName">CompanionStatic</attr>
-	<remove-node path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion' and count(method)=0 and count(field)=0]" />
 	<remove-node path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion']/constructor" />
 
 	<!--Remove Kotlin Extension classes-->
@@ -30,7 +20,11 @@
 	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient']/method[@name='create']"/>
 	<remove-node path="/api/package[@name='com.twilio.conversations']/interface[@name='ConversationsClient.Properties']/method[@name='newBuilder']"/>
 
-	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='CallbackListener']/method[@name='onError' and count(parameter)=1 and parameter[1][@type='com.twilio.conversations.ErrorInfo']]" name="argsType">CallbackListenerErrorEventArgs</attr>
-	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='StatusListener']/method[@name='onError' and count(parameter)=1 and parameter[1][@type='com.twilio.conversations.ErrorInfo']]" name="argsType">StatusListenerErrorEventArgs</attr>
+	<!--Fix duplicate ErrorEventArgs-->
+	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='CallbackListener']/method[@name='onError' and count(parameter)=1 and parameter[1][@type='com.twilio.util.ErrorInfo']]" name="argsType">CallbackListenerErrorEventArgs</attr>
+	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='StatusListener']/method[@name='onError' and count(parameter)=1 and parameter[1][@type='com.twilio.util.ErrorInfo']]" name="argsType">StatusListenerErrorEventArgs</attr>
+
+	<!--Change IParticipant.GetType() to IParticipant.ParticipantType-->
+	<attr path="/api/package[@name='com.twilio.conversations']/interface[@name='Participant']/method[@name='getType' and count(parameter)=0]" name="propertyName">ParticipantType</attr>
 
 </metadata>

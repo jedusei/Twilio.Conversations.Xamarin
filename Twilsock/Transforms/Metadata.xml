@@ -3,13 +3,7 @@
 	<!--Companion classes-->
 	<attr path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion']" name="managedName">CompanionStatic</attr>
 
-	<!--Remove Internal Namespaces-->
-	<remove-node path="/api/package[@name='com.twilio.conversations.extensions']"/>
-	<remove-node path="/api/package[@name='com.twilio.conversations.internal']"/>
-	<remove-node path="/api/package[@name='com.twilio.conversations.media']"/>
-
 	<!--Remove Kotlin Extension classes-->
 	<remove-node path="/api/package/class[substring(@name,string-length(@name)-1)='Kt']" />
-	<remove-node  path="/api/package[@name='com.twilio.twilsock.client']/class[@name='TwilsockMessageKt.WhenMappings']"/>
 
 </metadata>

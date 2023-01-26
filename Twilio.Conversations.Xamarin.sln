@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Conversations.Droid", "Twilio.Conversations.Droid\Twilio.Conversations.Droid.csproj", "{ED7A4DDD-6EE7-4529-9DE2-AB9D9593DAB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.Conversations.iOS", "Twilio.Conversations.iOS\Twilio.Conversations.iOS.csproj", "{C23D7586-CEB9-44EF-95F0-33C09A72C696}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Twilio.Conversations.iOS", "Twilio.Conversations.iOS\Twilio.Conversations.iOS.csproj", "{C23D7586-CEB9-44EF-95F0-33C09A72C696}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilsock", "Twilsock\Twilsock.csproj", "{8B3ACD31-9468-4BD5-9779-FF77FEC3E004}"
 EndProject

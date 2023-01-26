@@ -1,52 +1,56 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{C23D7586-CEB9-44EF-95F0-33C09A72C696}</ProjectGuid>
-    <TemplateGuid>{b6f3ff35-79b2-4f25-a2fc-60a7cf61013b}</TemplateGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Twilio.Conversations.iOS</RootNamespace>
-    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Twilio.Conversations.iOS</AssemblyName>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ProcessEnums>true</ProcessEnums>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="Xamarin.iOS" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <ObjcBindingApiDefinition Include="StructsAndEnums.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <NativeReference Include="Native References/TwilioConversationsClient.framework">
-      <Kind>Framework</Kind>
-    </NativeReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
+﻿<Project Sdk="Xamarin.Legacy.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>xamarin.ios10;net6.0-ios</TargetFrameworks>
+		<IsBindingProject>true</IsBindingProject>
+		<NoBindingEmbedding>true</NoBindingEmbedding>
+		<SupportedOSPlatformVersion>12.0</SupportedOSPlatformVersion>
+		<NoNFloatUsing Condition="'$(TargetFramework)' == 'xamarin.ios10'">true</NoNFloatUsing>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>true</ImplicitUsings>
+		<NoBindingEmbedding>true</NoBindingEmbedding>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>Twilio.Conversations.iOS</PackageId>
+		<Title>Twilio Conversations SDK for iOS</Title>
+		<Version>2.2.6</Version>
+		<Authors>Twilio, Joseph Edusei</Authors>
+		<Company>Twilio</Company>
+		<PackageProjectUrl>https://github.com/jedusei/Twilio.Conversations.Xamarin</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/jedusei/Twilio.Conversations.Xamarin</RepositoryUrl>
+		<PackageTags>twilio conversations; xamarin ios</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<!-- An iOS app project cannot find XCFrameworks within a NuGet if a TFM
+       previous than net6.0-ios is used.
+       https://github.com/xamarin/xamarin-macios/issues/13693
+       You must include the Xcframework's NativeReference tag into the iOS app
+       project so sidecar can work properly. -->
+	<!-- This workaround was designed like this to have the same
+       the NativeReference tag for the iOS binding and for the .targets file -->
+	<Import Project="Twilio.Conversations.iOS.targets" />
+
+	<ItemGroup>
+		<_NativeReference Include="..\Native References\TwilioConversationsClient.xcframework">
+			<_Id>$(_TCSdkId)</_Id>
+		</_NativeReference>
+	</ItemGroup>
+	<!-- End of workaround -->
+
+	<ItemGroup>
+		<None Include="Twilio.Conversations.iOS.targets" Pack="True" PackagePath="build/Twilio.Conversations.iOS.targets" />
+		<None Include="Twilio.Conversations.iOS.targets" Pack="True" PackagePath="buildTransitive/Twilio.Conversations.iOS.targets" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'xamarin.ios10'">
+		<Compile Remove="ApiDefinition.cs" />
+		<Compile Remove="StructsAndEnums.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+		<ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+	</ItemGroup>
 </Project>

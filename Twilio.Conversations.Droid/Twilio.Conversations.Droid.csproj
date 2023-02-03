@@ -4,7 +4,14 @@
 		<SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
 		<IsBindingProject>true</IsBindingProject>
 		<AndroidGenerateResourceDesigner>false</AndroidGenerateResourceDesigner>
+		<!-- Hide some warnings -->
+		<NoWarn>CS0108;CS0114;BG8700</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>Twilio.Conversations.Droid</PackageId>
 		<Title>Twilio Conversations SDK for Android</Title>
+		<Description>C# bindings for the Twilio Conversations Android SDK</Description>
 		<Version>4.0.2</Version>
 		<Authors>Twilio, Joseph Edusei</Authors>
 		<Company>Twilio</Company>
@@ -12,8 +19,6 @@
 		<RepositoryUrl>https://github.com/jedusei/Twilio.Conversations.Xamarin</RepositoryUrl>
 		<PackageTags>twilio conversations; xamarin android</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<!-- Hide some warnings -->
-		<NoWarn>CS0108;CS0114;BG8700</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup>

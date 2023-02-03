@@ -14,6 +14,7 @@
 	<PropertyGroup>
 		<PackageId>Twilio.Conversations.iOS</PackageId>
 		<Title>Twilio Conversations SDK for iOS</Title>
+		<Description>C# bindings for the Twilio Conversations iOS SDK</Description>
 		<Version>2.2.7</Version>
 		<Authors>Twilio, Joseph Edusei</Authors>
 		<Company>Twilio</Company>

@@ -14,7 +14,7 @@
 	<PropertyGroup>
 		<PackageId>Twilio.Conversations.iOS</PackageId>
 		<Title>Twilio Conversations SDK for iOS</Title>
-		<Version>2.2.6</Version>
+		<Version>2.2.7</Version>
 		<Authors>Twilio, Joseph Edusei</Authors>
 		<Company>Twilio</Company>
 		<PackageProjectUrl>https://github.com/jedusei/Twilio.Conversations.Xamarin</PackageProjectUrl>

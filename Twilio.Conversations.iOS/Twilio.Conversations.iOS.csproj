@@ -12,7 +12,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>Twilio.Conversations.iOS</PackageId>
+		<PackageId>Xamarin.Twilio.Conversations.iOS</PackageId>
 		<Title>Twilio Conversations SDK for iOS</Title>
 		<Description>C# bindings for the Twilio Conversations iOS SDK</Description>
 		<Version>2.2.7</Version>
@@ -34,15 +34,15 @@
 	<Import Project="Twilio.Conversations.iOS.targets" />
 
 	<ItemGroup>
-		<_NativeReference Include="..\Native References\TwilioConversationsClient.xcframework">
+		<_NativeReference Include="Native References\TwilioConversationsClient.xcframework">
 			<_Id>$(_TCSdkId)</_Id>
 		</_NativeReference>
 	</ItemGroup>
 	<!-- End of workaround -->
 
 	<ItemGroup>
-		<None Include="Twilio.Conversations.iOS.targets" Pack="True" PackagePath="build/Twilio.Conversations.iOS.targets" />
-		<None Include="Twilio.Conversations.iOS.targets" Pack="True" PackagePath="buildTransitive/Twilio.Conversations.iOS.targets" />
+		<None Include="Twilio.Conversations.iOS.targets" Pack="True" PackagePath="build/$(PackageId).targets" />
+		<None Include="Twilio.Conversations.iOS.targets" Pack="True" PackagePath="buildTransitive/$(PackageId).targets" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'xamarin.ios10'">

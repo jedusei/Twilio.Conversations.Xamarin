@@ -18,7 +18,7 @@ namespace Twilio.Conversations
 
         public static string SdkVersion => JNIEnv.GetString(JNIEnv.CallStaticObjectMethod(_class, _getSdkVersionMethod), JniHandleOwnership.TransferLocalRef);
 
-        public static unsafe void Create(Context context, string token, IConversationsClientProperties properties, ICallbackListener listener)
+        public static unsafe void Create(Context context, string token, IProperties properties, ICallbackListener listener)
         {
             var nativeToken = JNIEnv.NewString(token);
             try
@@ -39,7 +39,7 @@ namespace Twilio.Conversations
             }
         }
 
-        public static unsafe void SetLogLevel(ConversationsClientLogLevel level)
+        public static unsafe void SetLogLevel(LogLevel level)
         {
             try
             {
@@ -54,14 +54,14 @@ namespace Twilio.Conversations
         }
 
 
-        public static class ClientProperties
+        public partial interface IProperties
         {
             static readonly IntPtr _clientPropertiesBuilderClass = JNIEnv.FindClass("com/twilio/conversations/ConversationsClientImpl$PropertiesImpl$BuilderImpl");
 
-            public static IConversationsClientPropertiesBuilder NewBuilder()
+            public static IBuilder NewBuilder()
             {
                 var handle = JNIEnv.CreateInstance(_clientPropertiesBuilderClass, "()V");
-                return Java.Lang.Object.GetObject<IConversationsClientPropertiesBuilder>(handle, JniHandleOwnership.TransferLocalRef);
+                return Java.Lang.Object.GetObject<IBuilder>(handle, JniHandleOwnership.TransferLocalRef);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Android.Runtime;
+using Com.Twilio.Util;
 
 namespace Twilio.Conversations
 {

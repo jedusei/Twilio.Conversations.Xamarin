@@ -1,0 +1,9 @@
+﻿<metadata>
+
+	<!--Companion classes-->
+	<attr path="/api/package/class[substring(@name,string-length(@name)-9)='.Companion']" name="managedName">CompanionStatic</attr>
+
+	<!--Remove Kotlin Extension classes-->
+	<remove-node path="/api/package/class[substring(@name,string-length(@name)-1)='Kt']" />
+
+</metadata>

@@ -1,20 +1,27 @@
 # Twilio.Conversations.Xamarin
+
 Xamarin Android and iOS bindings for the Twilio Conversation SDKs.
 
-[![NuGet](https://img.shields.io/nuget/v/Twilio.Conversations.Xamarin.svg)](https://www.nuget.org/packages/Twilio.Conversations.Xamarin/)
+[Android: ![NuGet](https://img.shields.io/nuget/v/Xamarin.Twilio.Conversations.Droid.svg)](https://www.nuget.org/packages/Xamarin.Twilio.Conversations.Droid/)
+
+[iOS: ![NuGet](https://img.shields.io/nuget/v/Xamarin.Twilio.Conversations.iOS.svg)](https://www.nuget.org/packages/Xamarin.Twilio.Conversations.iOS/)
 
 ## Documentation
+
 General Documentation: https://www.twilio.com/docs/conversations/fundamentals
 
-Android SDK API Reference: https://media.twiliocdn.com/sdk/android/conversations/releases/3.1.0/docs/
+Android SDK API Reference: https://media.twiliocdn.com/sdk/android/conversations/releases/4.0.2/docs/
 
-iOS SDK API Reference: https://media.twiliocdn.com/sdk/ios/conversations/releases/2.2.3/docs/
+iOS SDK API Reference: https://media.twiliocdn.com/sdk/ios/conversations/releases/2.2.7/docs/
 
-## Things to note... 
+## Things to note...
+
 ### Initializing the Conversations Client on Android
-In the Twilio Conversations SDK for Android, some types are defined as interfaces, so the Xamarin binding tools generated a corresponding C# interface, prefixing the class name with an "I" to follow C# naming conventions. One example is the ``ConversationsClient`` interface, which is exposed in C# as ``IConversationsClient``.
 
-So, to create a conversations client (for Android), you must call either ``IConversationsClient.Create`` or ``IConversationsClient.CreateAsync``, like this:
+In the Twilio Conversations SDK for Android, some types are defined as interfaces, so the Xamarin binding tools generated a corresponding C# interface, prefixing the class name with an "I" to follow C# naming conventions. One example is the `ConversationsClient` interface, which is exposed in C# as `IConversationsClient`.
+
+So, to create a conversations client (for Android), you must call either `IConversationsClient.Create` or `IConversationsClient.CreateAsync`, like this:
+
 ```
 string token = "<twilio access token>";
 var properties = IConversationsClient.ClientProperties.NewBuilder().CreateProperties(); // You can specify some options here; please refer to the API reference for more information.
@@ -22,7 +29,9 @@ var conversationsClient = await IConversationsClient.CreateAsync(Application.Con
 ```
 
 ### Build Warnings
+
 Sometimes, when building your Android project after you have included the Twilio.Conversations.Xamarin package, you will see some warnings in the build output window:
+
 ```
 2>  Warning in obj\Debug\120\lp\7\jl\__reference__kotlinx-coroutines-core-jvm-1.5.0-native-mt.jar:kotlinx/coroutines/debug/AgentPremain.class at Lkotlinx/coroutines/debug/AgentPremain;installSignalHandler()V:
 2>  Type `sun.misc.Signal` was not found, it is required for default or static interface methods desugaring of `Lkotlinx/coroutines/debug/AgentPremain;installSignalHandler()V`
